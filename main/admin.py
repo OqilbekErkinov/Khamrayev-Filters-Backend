@@ -14,6 +14,7 @@ class Filter_type(ModelAdmin):
     list_display = (
         'name',
         'slug',
+        'stock',
         'parent',
     )
 
@@ -40,22 +41,14 @@ class Equipment(ModelAdmin):
         'image',
     )
 
-@admin.register(models.Oil_filter)
-class Oil_filter(ModelAdmin):
+@admin.register(models.Products)
+class Products(ModelAdmin):
     list_display = (
         'firm',
         'article_number',
         'type',
         'description',
-        'bp_opening_dp',
-        'inner_gasket_diameter',
-        'largest_od',
-        'efficiency',
-        'gasket_hd',
-        'length',
-        'outer_seam_diameter',
-        'stock',
+        'specifications',
         'image',
         'slug',
     )
-

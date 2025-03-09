@@ -3,6 +3,7 @@ from django.utils.text import slugify
 
 class Filter_type(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    stock = models.PositiveIntegerField(default=0)
     slug = models.SlugField(unique=True)
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True, related_name='subcategories'
@@ -70,22 +71,13 @@ class Equipment(models.Model):
         return self.name
 
 
-class Oil_filter(models.Model):
+class Products(models.Model):
     firm = models.ForeignKey(Manafacturer, related_name='manafacturers', on_delete=models.CASCADE)
     article_number = models.CharField(max_length=100, unique=True)
     type = models.ForeignKey(Filter_type, related_name='filter_types', on_delete=models.CASCADE)
     description = models.TextField(blank=True)
-
-    bp_opening_dp = models.FloatField(help_text="БПВ открытие ДП (фунтов на квадратный дюйм)")
-    inner_gasket_diameter = models.FloatField(help_text="Внутренний диаметр прокладки (дюймы)")
-    largest_od = models.FloatField(help_text="Крупнейший OD (дюймы)")
-    efficiency = models.IntegerField(help_text="Эффективность (%)")
-    gasket_hd = models.FloatField(help_text="Прокладка НД (дюймы)")
-    length = models.FloatField(help_text="Длина (дюймы)")
-    outer_seam_diameter = models.FloatField(help_text="Внешний Диаметр Шва (дюймы)")
-    stock = models.PositiveIntegerField(default=0)
-
-    image = models.ImageField(upload_to="oil_filters/", blank=True, null=True)
+    specifications = models.JSONField(blank=True, null=True)
+    image = models.ImageField(upload_to="products/", blank=True, null=True)
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):

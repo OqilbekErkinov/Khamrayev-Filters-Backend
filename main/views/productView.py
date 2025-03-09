@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from main import models
-from main.serializers.productSR import Oil_filterSerializer, Filter_typeSerializer
+from main.serializers.productSR import ProductsSerializer, Filter_typeSerializer
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -9,18 +9,18 @@ class ProductView(APIView):
         slug = request.query_params.get('slug')  # URL parametrdan olish
         if slug:
             try:
-                oil_filter = models.Oil_filter.objects.get(slug=slug)
-                oil_filterSR = Oil_filterSerializer(oil_filter, context={'request': request})
-            except models.Oil_filter.DoesNotExist:
+                product = models.Products.objects.get(slug=slug)
+                productSR = ProductsSerializer(product, context={'request': request})
+            except models.Products.DoesNotExist:
                 return Response({'success': False, 'message': 'Mahsulot topilmadi'}, status=status.HTTP_404_NOT_FOUND)
         else:
-            oil_filters = models.Oil_filter.objects.all()
-            oil_filterSR = Oil_filterSerializer(oil_filters, many=True, context={'request': request})
+            products = models.Products.objects.all()
+            productSR = ProductsSerializer(products, many=True, context={'request': request})
 
         data = {
             'success': True,
             'message': 'Ishladi',
-            'data': oil_filterSR.data
+            'data': productSR.data
         }
         return Response(data)
 
@@ -29,6 +29,23 @@ class ProductView(APIView):
         if serializer.is_valid():
             serializer.save()
         return Response(serializer.data)
+
+class ProductDetailView(APIView):
+    def get(self, request, product_id):
+        try:
+            product = models.Products.objects.get(id=product_id)
+            productSR = ProductsSerializer(product, context={'request': request})
+            return Response({
+                'success': True,
+                'message': 'Mahsulot topildi',
+                'data': productSR.data
+            }, status=status.HTTP_200_OK)
+        except models.Products.DoesNotExist:
+            return Response({
+                'success': False,
+                'message': 'Mahsulot topilmadi'
+            }, status=status.HTTP_404_NOT_FOUND)
+
 
 
 

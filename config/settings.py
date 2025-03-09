@@ -53,10 +53,9 @@ CUSTOM_APPS = [
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + CUSTOM_APPS
 
 # ======================================= MIDDLEWARE =======================================
-CORS_ALLOW_ALL_ORIGINS = True
 
-DJANGO_MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Must be at the top
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -66,7 +65,33 @@ DJANGO_MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-MIDDLEWARE = DJANGO_MIDDLEWARE
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # Example frontend running on React/Vue
+    "https://yourfrontend.com",  # Your deployed frontend domain
+]
+
+CORS_ALLOW_HEADERS = [
+    "authorization",
+    "content-type",
+    "x-requested-with",
+]
+
+
+
+
+
 
 # ======================================= URLS & WSGI =======================================
 ROOT_URLCONF = 'config.urls'
@@ -150,5 +175,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 if LOGGING_STATUS:
-    setup_logging() 
-    
+    setup_logging()
