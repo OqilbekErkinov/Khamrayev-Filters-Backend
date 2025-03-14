@@ -12,11 +12,14 @@ DEBUG = True
 
 LOGGING_STATUS =True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['138.68.101.45', 'localhost', '127.0.0.1']
 
 DB = False   #True bo'lsa  PostgreSql False bo'lsa  Sqlite ni o'zlashtiradi
 
 UNFOLD = UNFOLD
+
+# ALLOWED_HOSTS = ['.example.com', '203.0.113.5']
+# ALLOWED_HOSTS = ['your_server_domain_or_IP', 'second_domain_or_IP', 'localhost']
 
 
 # ======================================= INSTALLED APPS =======================================
