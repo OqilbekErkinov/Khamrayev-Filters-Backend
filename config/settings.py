@@ -12,7 +12,7 @@ DEBUG = True
 
 LOGGING_STATUS =True
 
-ALLOWED_HOSTS = ['138.68.101.45', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['filtersapi.divspan.uz', '138.68.101.45', 'localhost', '127.0.0.1']
 
 DB = False   #True bo'lsa  PostgreSql False bo'lsa  Sqlite ni o'zlashtiradi
 
