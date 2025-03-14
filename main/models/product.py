@@ -1,13 +1,15 @@
 from django.db import models
 from django.utils.text import slugify
 
-class Filter_type(models.Model):
+
+class Filter_types(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    stock = models.PositiveIntegerField(default=0)
     slug = models.SlugField(unique=True)
-    parent = models.ForeignKey(
-        'self', on_delete=models.CASCADE, null=True, blank=True, related_name='subcategories'
-    )
+    svg = models.TextField()
+    stock = models.PositiveIntegerField(default=0)
+    available = models.BooleanField(default=True)
+    parent = models.JSONField(blank=True, null=True)
+
 
     class Meta:
         verbose_name_plural = "Filter_types"
@@ -18,13 +20,14 @@ class Filter_type(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.name} (Subcategory of {self.parent.name})" if self.parent else self.name
+        return self.name
 
 
-class Manafacturer(models.Model):
+class Manafacturers(models.Model):
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to="manafacturers/", blank=True, null=True)
+    available = models.BooleanField(default=True)
 
     class Meta:
         verbose_name_plural = "Manafacturers"
@@ -38,9 +41,10 @@ class Manafacturer(models.Model):
         return self.name
 
 
-class Brands_of_equipment(models.Model):
+class Brands_of_equipments(models.Model):
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(unique=True)
+    available = models.BooleanField(default=True)
 
     class Meta:
         verbose_name_plural = "Brands_of_equipments"
@@ -54,10 +58,11 @@ class Brands_of_equipment(models.Model):
         return self.name
 
 
-class Equipment(models.Model):
+class Equipments(models.Model):
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to="equipments/", blank=True, null=True)
+    available = models.BooleanField(default=True)
 
     class Meta:
         verbose_name_plural = "Equipments"
@@ -72,13 +77,15 @@ class Equipment(models.Model):
 
 
 class Products(models.Model):
-    firm = models.ForeignKey(Manafacturer, related_name='manafacturers', on_delete=models.CASCADE)
-    article_number = models.CharField(max_length=100, unique=True)
-    type = models.ForeignKey(Filter_type, related_name='filter_types', on_delete=models.CASCADE)
+    firm = models.ForeignKey(Manafacturers, related_name='manafacturers', on_delete=models.CASCADE,db_index=True)
+    article_number = models.CharField(max_length=100, unique=True,db_index=True)
+    type = models.ForeignKey(Filter_types, related_name='filter_types', on_delete=models.CASCADE,db_index=True)
     description = models.TextField(blank=True)
     specifications = models.JSONField(blank=True, null=True)
     image = models.ImageField(upload_to="products/", blank=True, null=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True,db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:

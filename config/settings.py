@@ -55,7 +55,7 @@ INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + CUSTOM_APPS
 # ======================================= MIDDLEWARE =======================================
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # Must be at the top
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -78,7 +78,7 @@ CORS_ALLOW_METHODS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Example frontend running on React/Vue
+    "http://localhost:3000",
     "https://yourfrontend.com",  # Your deployed frontend domain
 ]
 
