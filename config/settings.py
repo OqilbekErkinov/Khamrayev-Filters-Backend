@@ -12,7 +12,7 @@ DEBUG = True
 
 LOGGING_STATUS =True
 
-ALLOWED_HOSTS = ['filtersapi.divspan.uz', '138.68.101.45', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['filtersapi.divspan.uz', '138.68.101.45', 'localhost', '127.0.0.1', 'filters.divspan.uz',]
 
 DB = False   #True bo'lsa  PostgreSql False bo'lsa  Sqlite ni o'zlashtiradi
 
@@ -82,7 +82,7 @@ CORS_ALLOW_METHODS = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "https://yourfrontend.com",  # Your deployed frontend domain
+    "https://filters.divspan.uz",
 ]
 
 CORS_ALLOW_HEADERS = [
