@@ -85,13 +85,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://filters.divspan.uz",
 ]
 
-CORS_ALLOW_HEADERS = [
-    "authorization",
-    "content-type",
-    "x-requested-with",
-]
-
-
+CORS_ALLOW_ALL_HEADERS = True
 
 
 
