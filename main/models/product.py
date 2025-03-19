@@ -4,7 +4,7 @@ from django.utils.text import slugify
 
 class Filter_types(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, null=True)
     svg = models.TextField()
     stock = models.PositiveIntegerField(default=0)
     available = models.BooleanField(default=True)
@@ -25,7 +25,7 @@ class Filter_types(models.Model):
 
 class Manafacturers(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, null=True)
     image = models.ImageField(upload_to="manafacturers/", blank=True, null=True)
     available = models.BooleanField(default=True)
 
@@ -43,7 +43,7 @@ class Manafacturers(models.Model):
 
 class Brands_of_equipments(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, null=True)
     available = models.BooleanField(default=True)
 
     class Meta:
@@ -60,7 +60,7 @@ class Brands_of_equipments(models.Model):
 
 class Equipments(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, null=True)
     image = models.ImageField(upload_to="equipments/", blank=True, null=True)
     available = models.BooleanField(default=True)
 
@@ -83,7 +83,7 @@ class Products(models.Model):
     description = models.TextField(blank=True)
     specifications = models.JSONField(blank=True, null=True)
     image = models.ImageField(upload_to="products/", blank=True, null=True)
-    slug = models.SlugField(unique=True,db_index=True)
+    slug = models.SlugField(unique=True, null=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
