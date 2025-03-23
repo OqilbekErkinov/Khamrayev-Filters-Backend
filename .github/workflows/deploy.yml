@@ -1,15 +1,37 @@
-name: Deploy to Server
+name: CI/CD with Telegram Notification
 
 on:
   push:
     branches:
       - main
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get commit information
+        run: |
+          COMMIT_HASH=$(git rev-parse HEAD)
+          COMMIT_MESSAGE=$(git log -1 --pretty=format:'%s' | sed 's/[_*\[\]()~`>#\+=|{}.!]/\\&/g')
+          COMMIT_DATE=$(git log -1 --pretty=format:'%ci')
+          BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+          REPO_NAME=${{ github.repository }}
+          COMMIT_URL="https://github.com/$REPO_NAME/commit/$COMMIT_HASH"
+          GITHUB_ACTOR="${{ github.actor }}"
+
+          echo "COMMIT_HASH=$COMMIT_HASH" >> $GITHUB_ENV
+          echo "COMMIT_MESSAGE=$COMMIT_MESSAGE" >> $GITHUB_ENV
+          echo "COMMIT_DATE=$COMMIT_DATE" >> $GITHUB_ENV
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
+          echo "COMMIT_URL=$COMMIT_URL" >> $GITHUB_ENV
+          echo "GITHUB_ACTOR=$GITHUB_ACTOR" >> $GITHUB_ENV
+
       - name: Serverga ulanish va pull qilish
         uses: appleboy/ssh-action@v0.1.7
         with:
@@ -36,12 +58,25 @@ jobs:
             systemctl restart gunicorn
             systemctl restart nginx
             EOF
-      - name: Send notification to Telegram after deployment
+
+      - name: Send notification to Telegram
         run: |
-          curl -X POST "https://api.telegram.org/bot7399847827:AAG5tD_qQU8qIktxVMRMkHoWZENLRU9HnQ4/sendMessage" \
-          -d "chat_id=-1002289045305" \
-          -d "parse_mode=MarkdownV2" \
-          -d "text=✅ *Khamrayev Backend обновлен успешно\!*%0A%0A\
-          🔄 *Код успешно загружен и обновлен на сервере*%0A\
-          📌 *Ветка:* \`${{ github.ref_name }}\`%0A\
-          🔗 [Просмотр репозитория](https://github.com/${{ github.repository }})"
+            curl -X POST "https://api.telegram.org/bot7399847827:AAG5tD_qQU8qIktxVMRMkHoWZENLRU9HnQ4/sendMessage" \
+            -d "chat_id=-1002289045305" \
+            -d parse_mode="MarkdownV2" \
+            -d text="*📢 KhamrayevFilters Backend проект обновлен\!*
+            📌 *Автор:* \`${{ env.GITHUB_ACTOR }}\`
+
+            🌿 *Ветка:* \`${{ env.BRANCH_NAME }}\`
+
+            📝 *Сообщение коммита:* \`${{ env.COMMIT_MESSAGE }}\`
+
+            📅 *Дата:* \`${{ env.COMMIT_DATE }}\`
+
+            🔗 [Просмотр коммита](${{ env.COMMIT_URL }})
+
+            ✅ *KhamrayevFilters Backend успешно обновлен на сервере\!*
+
+            🔄 *Код загружен и обновлен на сервере*
+
+            🔗 [Просмотр репозитория](https://github.com/${{ github.repository }})"
