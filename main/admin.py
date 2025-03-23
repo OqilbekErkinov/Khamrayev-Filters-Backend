@@ -5,20 +5,36 @@ from main import models
 from main.models.FilterSearch import FilterRequest
 from main.models.Contact import ContactForm
 from main.models.Oformit import OformitProducts, OformitProductItem
+from main.models import SubCategory
+
 
 admin.site.unregister(User)
 admin.site.unregister(Group)
 
+@admin.register(models.SubCategory)
+class SubCategoryAdmin(ModelAdmin):
+    list_display = ('name', 'alt_name', 'type', 'slug')
+    prepopulated_fields = {'slug': ('type',)}
+
 @admin.register(models.Filter_types)
-class Filter_types(ModelAdmin):
+class Filter_typesAdmin(ModelAdmin):
     list_display = (
         'name',
         'slug',
         'stock',
-        'parent',
+        'display_subcategories',
         'available',
         'svg',
     )
+    filter_horizontal = ('subcategories',)
+
+    def display_subcategories(self, obj):
+        """ ManyToManyField qiymatlarini string sifatida chiqarish """
+        return ", ".join([subcategory.name for subcategory in obj.subcategories.all()])
+
+    display_subcategories.short_description = "Subcategories"
+
+
 
 @admin.register(models.Manafacturers)
 class Manafacturers(ModelAdmin):
@@ -29,6 +45,8 @@ class Manafacturers(ModelAdmin):
         'available',
     )
 
+
+
 @admin.register(models.Brands_of_equipments)
 class Brands_of_equipments(ModelAdmin):
     list_display = (
@@ -36,6 +54,8 @@ class Brands_of_equipments(ModelAdmin):
         'slug',
         'available',
     )
+
+
 
 @admin.register(models.Equipments)
 class Equipments(ModelAdmin):
@@ -46,12 +66,15 @@ class Equipments(ModelAdmin):
         'available',
     )
 
+
+
 @admin.register(models.Products)
 class Products(ModelAdmin):
     list_display = (
         'firm',
         'article_number',
         'type',
+        'subcategory',
         'description',
         'specifications',
         'image',
@@ -59,6 +82,10 @@ class Products(ModelAdmin):
         'created_at',
         'updated_at',
     )
+    prepopulated_fields = {'slug': ('article_number',)}
+
+
+
 
 @admin.register(FilterRequest)
 class FilterRequestAdmin(admin.ModelAdmin):

@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from main import models
 from main.serializers.productSR import ProductsSerializer, Filter_typeSerializer, \
-    ManafacturerSerializer, Brands_of_equipmentSerializer, EquipmentSerializer
+    ManafacturerSerializer, Brands_of_equipmentSerializer, EquipmentSerializer, SubCategorySerializer
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -47,6 +47,28 @@ class ProductDetailView(APIView):
                 'success': False,
                 'message': 'Mahsulot topilmadi'
             }, status=status.HTTP_404_NOT_FOUND)
+
+
+class SubCategoryView(APIView):
+    def get(self, request):
+        slug = request.query_params.get('slug')
+        if slug:
+            try:
+                subcategory = models.SubCategory.objects.get(slug=slug)
+                subcategorySR = SubCategorySerializer(subcategory, context={'request': request})
+            except models.SubCategory.DoesNotExist:
+                return Response({'success': False, 'message': 'Subkategoriya topilmadi'},
+                                status=status.HTTP_404_NOT_FOUND)
+        else:
+            subcategories = models.SubCategory.objects.all()
+            subcategorySR = SubCategorySerializer(subcategories, many=True, context={'request': request})
+
+        data = {
+            'success': True,
+            'message': 'Ishladi',
+            'data': subcategorySR.data
+        }
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class Filter_typeView(APIView):

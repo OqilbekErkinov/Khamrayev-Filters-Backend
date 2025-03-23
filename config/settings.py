@@ -8,7 +8,7 @@ SITE_ID = 1
 
 SECRET_KEY = 'django-insecure-%cq-(md-*c872)6y31u!!k_ry6rp!+4a_ptd(l!5$rf)@n!k&+'
 
-DEBUG = False
+DEBUG = True
 
 LOGGING_STATUS =True
 
