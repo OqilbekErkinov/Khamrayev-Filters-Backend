@@ -1,7 +1,8 @@
 from rest_framework.views import APIView
 from main import models
 from main.serializers.productSR import ProductsSerializer, Filter_typeSerializer, \
-    ManafacturerSerializer, Brands_of_equipmentSerializer, EquipmentSerializer, SubCategorySerializer
+    ManafacturerSerializer, Brands_of_equipmentSerializer, EquipmentSerializer, \
+    SubCategorySerializer, Models_of_BrandsSerializer
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -129,6 +130,26 @@ class Brands_of_equipmentView(APIView):
             'data': brands_of_equipmentsSR.data
         }
         return Response(data)
+
+
+class Models_of_BrandsView(APIView):
+    def get(self, request):
+        slug = request.query_params.get('slug')
+
+        if slug:
+            models_of_brands = models.Models_of_Brands.objects.filter(slug=slug)
+            if not models_of_brands.exists():
+                return Response({'success': False, 'message': 'Model topilmadi'}, status=status.HTTP_404_NOT_FOUND)
+
+            models_of_brandsSR = Models_of_BrandsSerializer(models_of_brands, many=True, context={'request': request})
+            data = {
+                'success': True,
+                'message': 'Ishladi',
+                'data': models_of_brandsSR.data
+            }
+            return Response(data)
+
+        return Response({'success': False, 'message': 'Slug berilmagan'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class EquipmentView(APIView):

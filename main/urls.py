@@ -2,7 +2,8 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from main.views.productView import ProductView, ProductDetailView, Filter_typeView, \
-    ManafacturerView, Brands_of_equipmentView, EquipmentView, SubCategoryView
+    ManafacturerView, Brands_of_equipmentView, EquipmentView, SubCategoryView, \
+    Models_of_BrandsView
 from main.views.product_filter import TypeFilter, FirmFilter
 from main.views.searchView import SearchProducts
 from main.views.FilterSearchView import FilterRequestView
@@ -16,6 +17,7 @@ urlpatterns = [
     path('filter-types', Filter_typeView.as_view(), name='filter-type-list'),
     path('manafacturers', ManafacturerView.as_view(), name='manafacturer-list'),
     path('brands_of_equipments', Brands_of_equipmentView.as_view(), name='brands_of_equipment-list'),
+    path('models_of_brands', Models_of_BrandsView.as_view(), name='models_of_brands-list'),
     path('equipments', EquipmentView.as_view(), name='equipment-list'),
     path('productstypefilter/', TypeFilter.as_view(), name='product-filter-by-type'),
     path('productsfirmfilter/', FirmFilter.as_view(), name='product-filter-by-firm'),

@@ -7,8 +7,8 @@ from drf_yasg import openapi
 
 
 UNFOLD = {
-    "SITE_TITLE": "FarGenius Group",
-    "SITE_HEADER": "FarGenius Group",
+    "SITE_TITLE": "Khamrayev Filters",
+    "SITE_HEADER": "Khamrayev Filters",
     "SITE_URL": "/",
     "SITE_SYMBOL": "speed",
 }
