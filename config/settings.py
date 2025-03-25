@@ -88,14 +88,22 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_ALL_HEADERS = True
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 485
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'daniil0571x@gmail.com'
-EMAIL_HOST_PASSWORD = 'tnto rfue emut hybi'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'daniil0571x@gmail.com'
+# EMAIL_HOST_PASSWORD = 'tnto rfue emut hybi'
+# DEFAULT_FROM_EMAIL = 'info@filters.divspan.uz'
+# ADMIN_EMAIL = 'daniil0571x@gmail.com'
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+ANYMAIL = {
+    "MAILGUN_API_KEY": "7a6cffe8d68c6e78c3dc357b80cc6678-f6202374-b4eddd88",
+    "MAILGUN_SENDER_DOMAIN": "filters.divspan.uz",
+}
 DEFAULT_FROM_EMAIL = 'info@filters.divspan.uz'
-ADMIN_EMAIL = 'daniil0571x@gmail.com'
+
+
 
 
 
@@ -179,12 +187,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # ======================================= DEFAULT SETTINGS =======================================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
-
 if LOGGING_STATUS:
     setup_logging()
-
-
-
-

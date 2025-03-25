@@ -7,6 +7,7 @@ from main.models.Contact import ContactForm
 from main.serializers.ContactSR import ContactFormSerializer
 
 
+
 class ContactFormView(APIView):
     def post(self, request):
         serializer = ContactFormSerializer(data=request.data)
@@ -20,10 +21,18 @@ class ContactFormView(APIView):
             Email: {contact_form.email}
             Message: {contact_form.message}
             """
+            # send_mail(
+            #     subject,
+            #     message,
+            #     settings.DEFAULT_FROM_EMAIL,
+            #     ["daniil0571x@gmail.com"],
+            #     fail_silently=False,
+            # )
+
             send_mail(
-                subject,
-                message,
-                settings.DEFAULT_FROM_EMAIL,
+                "Test Subject",
+                "This is a test email.",
+                "info@filters.divspan.uz",
                 ["daniil0571x@gmail.com"],
                 fail_silently=False,
             )
