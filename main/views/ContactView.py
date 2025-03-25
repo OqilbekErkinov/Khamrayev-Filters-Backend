@@ -21,21 +21,21 @@ class ContactFormView(APIView):
             Email: {contact_form.email}
             Message: {contact_form.message}
             """
-            # send_mail(
-            #     subject,
-            #     message,
-            #     settings.DEFAULT_FROM_EMAIL,
-            #     ["daniil0571x@gmail.com"],
-            #     fail_silently=False,
-            # )
-
             send_mail(
-                "Test Subject",
-                "This is a test email.",
-                "info@filters.divspan.uz",
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
                 ["daniil0571x@gmail.com"],
                 fail_silently=False,
             )
+
+            # send_mail(
+            #     "Test Subject",
+            #     "This is a test email.",
+            #     "info@filters.divspan.uz",
+            #     ["daniil0571x@gmail.com"],
+            #     fail_silently=False,
+            # )
 
             return Response({
                 'success': True,
