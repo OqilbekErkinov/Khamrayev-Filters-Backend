@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.core.mail import send_mail
-from django.conf import settings
+# from django.core.mail import send_mail
+# from django.conf import settings
 from main.models.Oformit import OformitProducts, OformitProductItem
 from main.serializers.OformitSR import OformitProductsSerializer
 
@@ -30,13 +30,13 @@ class OformitProductsView(APIView):
                             f"\t\tQuantity: {item.quantity}\n" \
                             f"\t\tType: {item.product.type}\n" \
                             f"\t\tFirm: {item.product.firm}\n"
-            send_mail(
-                subject,
-                message,
-                settings.DEFAULT_FROM_EMAIL,
-                ["daniil0571x@gmail.com"],
-                fail_silently=False,
-            )
+            # send_mail(
+            #     subject,
+            #     message,
+            #     settings.DEFAULT_FROM_EMAIL,
+            #     ["daniil0571x@gmail.com"],
+            #     fail_silently=False,
+            # )
 
             return Response({
                 'success': True,
