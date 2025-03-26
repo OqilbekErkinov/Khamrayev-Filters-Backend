@@ -9,6 +9,7 @@ from main.views.searchView import SearchProducts
 from main.views.FilterSearchView import FilterRequestView
 from main.views.ContactView import ContactFormView
 from main.views.OformitView import OformitProductsView
+# from main.views.register_loginView import RegisterView, LoginView
 
 urlpatterns = [
     path('products', ProductView.as_view(), name='product-list'),
@@ -25,6 +26,8 @@ urlpatterns = [
     path("filter-request/", FilterRequestView.as_view(), name="filter_request_api"),
     path("contact-form/", ContactFormView.as_view(), name="contact_form_api"),
     path("oformit-products/", OformitProductsView.as_view(), name="oformit_products_api"),
+    # path("register/", RegisterView.as_view(), name="register"),
+    # path("login/", LoginView.as_view(), name="login"),
 
 ]
 if settings.DEBUG:

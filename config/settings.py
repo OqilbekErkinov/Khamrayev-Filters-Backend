@@ -43,6 +43,7 @@ THIRD_PARTY_APPS = [
     "unfold.contrib.guardian",
     "unfold.contrib.simple_history",
     'rest_framework',
+    'rest_framework_simplejwt',
     'drf_yasg',
     'corsheaders',
     # 'ckeditor',
@@ -86,6 +87,15 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_ALL_HEADERS = True
+
+
+# AUTH_USER_MODEL = 'main.RegisterUser'
+#
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ),
+# }
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

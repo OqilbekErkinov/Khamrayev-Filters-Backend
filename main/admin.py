@@ -5,10 +5,16 @@ from main import models
 from main.models.FilterSearch import FilterRequest
 from main.models.Contact import ContactForm
 from main.models.Oformit import OformitProducts, OformitProductItem
-
-
-admin.site.unregister(User)
+# from django.contrib.auth import get_user_model
+# User = get_user_model()
+# if admin.site.is_registered(User):
+#     admin.site.unregister(User)
 admin.site.unregister(Group)
+
+
+# @admin.register(models.RegisterUser)
+# class CustomUserAdmin(ModelAdmin):
+#     list_display = ('username', 'email', 'is_staff', 'is_active')
 
 
 @admin.register(models.SubCategory)

@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.core.mail import send_mail
-from django.conf import settings
+# from django.core.mail import send_mail
+# from django.conf import settings
 from main.models.FilterSearch import FilterRequest
 from main.serializers.FilterSearchSR import FilterRequestSerializer
 
@@ -20,13 +20,13 @@ class FilterRequestView(APIView):
             Email: {filter_request.email}
             Message: {filter_request.message}
             """
-            send_mail(
-                subject,
-                message,
-                settings.DEFAULT_FROM_EMAIL,
-                ["daniil0571x@gmail.com"],
-                fail_silently=False,
-            )
+            # send_mail(
+            #     subject,
+            #     message,
+            #     settings.DEFAULT_FROM_EMAIL,
+            #     ["daniil0571x@gmail.com"],
+            #     fail_silently=False,
+            # )
 
             return Response({
                 'success': True,
